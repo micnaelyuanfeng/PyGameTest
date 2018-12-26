@@ -7,18 +7,27 @@ class interrupt_handler(object):
     
     def keyboard_event(self, event):
         key_direction = KEY_DIRECTION_INVALID
+        key_space     = 0
 
-        if event.key == pygame.K_RIGHT:
-            key_direction = 0
-        elif event.key == pygame.K_DOWN:
-            key_direction = 1
-        elif event.key == pygame.K_LEFT:
-            key_direction = 2
-        elif event.key == pygame.K_UP:
-            key_direction = 3
-        
-        return key_direction
+        key_list      = []
 
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RIGHT:
+                key_direction = KEY_DIRECTION_RIGHT
+            elif event.key == pygame.K_LEFT:
+                key_direction = KEY_DIRECTION_LEFT
+            elif event.key == pygame.K_UP:
+                key_direction = KEY_DIRECTION_UP
+            elif event.key == pygame.K_DOWN:
+                key_direction = KEY_DIRECTION_DOWN
+            elif event.key == pygame.K_SPACE:
+                key_space = MARIO_JUMP
+
+        key_list.append(key_direction)
+        key_list.append(key_space)
+
+        return key_list
+    
     def mouse_position_event(self, event):
         mouse_position_x = MOUSE_POSITION_INVALID
         mouse_position_y = MOUSE_POSITION_INVALID
@@ -54,11 +63,11 @@ class interrupt_handler(object):
         return mouse_button_left, mouse_button_right, mouse_left_up, mouse_right_up, mouse_left_down, mouse_right_down
     
     def peripheral_event_handler(self, event):
-        direction = 0
-        mouse_position = 0
 
-        direction      = self.keyboard_event(event)
-        mouse_position = self.mouse_position_event(event)
-        mouse_button   = self.mouse_button_event(event)
+        peripheral_list = {}
 
-        return direction, mouse_position, mouse_button
+        peripheral_list[KEY_ACTION]         = self.keyboard_event(event)
+        peripheral_list[MOUSE_MOVE_ACTION]  = self.mouse_position_event(event)
+        peripheral_list[MOUSE_CLICK_ACTION] = self.mouse_button_event(event)
+
+        return peripheral_list
