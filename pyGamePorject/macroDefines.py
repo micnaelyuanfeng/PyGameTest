@@ -27,7 +27,13 @@ SCREEN_HEIGHT             = 240
 MOVE_RANGE                = 30
 
 MARIO_POSITION_X_INIT     = 37
-MATIO_POSITION_Y_INIT     = 199
+MARIO_POSITION_Y_INIT     = 199
+
+MASHROOM_POSITION_X       = 120
+MASHROOM_POSITION_Y       = 199
+
+FLOWER_POSITION_X         = 150
+FLOWER_POSITION_Y         = 199
 
 GOOMBA_1_POSITION_X_INIT  = 200
 GOOMBA_1_POSITION_Y_INIT  = 200
@@ -42,3 +48,20 @@ MARIO_JUMP                = 1
 
 KEY_DIRECTION_IDX         = 0
 KEY_SPACE_IDX             = 1
+
+FIRE_BALL_POSITION_X      = 50
+FIRE_BALL_POSITION_Y      = 50
+
+QUESTION_BLOCK_POSITION_X = 220
+QUESTION_BLOCK_POSITION_Y = 155
+
+KEY_BACKGROUND            = "background"
+KEY_MARIO                 = "marioBlock"
+KEY_QUESTION              = "questionBlock"
+KEY_GOOMBA                = "goombaBlock"
+KEY_FLOWER                = "flowerBlock"
+KEY_MASHROOM              = "mashroomBlock"
+KEY_FIREBALL              = "fireballBlock"
+
+EAT_PERIOD_TIMESPAN       = 600
+EAT_PERIOD_STEP           = 100

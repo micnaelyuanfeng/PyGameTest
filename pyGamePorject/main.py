@@ -7,7 +7,7 @@ from gameElement  import *
 from gameEngine   import *
 from macroDefines import *
 
-game_list = []
+game_list = {}
 bg_color = (230, 230, 230)
 
 if __name__ == "__main__":
@@ -34,9 +34,14 @@ if __name__ == "__main__":
             else:
                 peripheral_actions = keyboardHanlder.peripheral_event_handler(event)
 
-        gameEngine.update_screen(screen, game_list, peripheral_actions, frame_counter)
+        gameEngine.check_mario_eat(game_list)
 
-        for element in game_list:
+        if game_list[KEY_MARIO].eat_done is True:
+            gameEngine.update_screen(screen, game_list, peripheral_actions, frame_counter)
+        elif game_list[KEY_MARIO].eat_done is False:
+            gameEngine.update_mario_grow_screen(screen, game_list[KEY_MARIO])
+
+        for key, element in game_list.items():
             element.draw(screen, element.get_element_name(), frame_counter)
 
         if frame_counter == 10000000:
