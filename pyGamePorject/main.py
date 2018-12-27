@@ -33,8 +33,10 @@ if __name__ == "__main__":
                 sys.exit()
             else:
                 peripheral_actions = keyboardHanlder.peripheral_event_handler(event)
-
+        gameEngine.check_mashroom_and_flower(game_list)
         gameEngine.check_mario_eat(game_list)
+        gameEngine.check_fire(screen, peripheral_actions[KEY_ACTION], game_list)
+        gameEngine.check_goomba_alive(game_list)
 
         if game_list[KEY_MARIO].eat_done is True:
             gameEngine.update_screen(screen, game_list, peripheral_actions, frame_counter)

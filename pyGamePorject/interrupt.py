@@ -8,6 +8,7 @@ class interrupt_handler(object):
     def keyboard_event(self, event):
         key_direction = KEY_DIRECTION_INVALID
         key_space     = 0
+        key_fire      = None
 
         key_list      = []
 
@@ -22,9 +23,12 @@ class interrupt_handler(object):
                 key_direction = KEY_DIRECTION_DOWN
             elif event.key == pygame.K_SPACE:
                 key_space = MARIO_JUMP
+            elif event.key == pygame.K_x:
+                key_fire = FIRE_ENABLE
 
         key_list.append(key_direction)
         key_list.append(key_space)
+        key_list.append(key_fire)
 
         return key_list
     

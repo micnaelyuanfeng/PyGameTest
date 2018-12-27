@@ -44,6 +44,7 @@ class fire_ball(game_element):
         self.image = {}
         self.rect  = None
         self.num_frames = 0
+        self.direction = None
 
     def set_fire_ball_block(self, screen, frames):
         for index, frame in enumerate(frames):
@@ -203,6 +204,8 @@ class mario_block(game_element):
         self.flip_draw     = False
         self.has_eat_something = False
 
+        self.fire_fireball = False
+
     def set_mario_block(self, screen, frames):
         self.num_frames = 0
 
@@ -277,8 +280,16 @@ class mario_block(game_element):
             img  = pygame.image.load(frame)
             self.image[index] = img
             
-            current_x = self.rect.centerx
-            current_y = self.rect.centery
+            if self.eat_mashroom is True or self.eat_flower is True:
+                current_x = self.rect.centerx
+                
+                if self.eat_done is False:
+                    current_y = BIG_MARIO_POSITION_Y
+                else:
+                    current_y = self.rect.centery
+            else:
+                current_x = self.rect.centerx
+                current_y = self.rect.centery
             
             self.rect.centerx = current_x
             self.rect.centery = current_y
@@ -287,37 +298,98 @@ class mario_block(game_element):
     def update_mario_frames(self, screen):
         if self.doing_jump is True:
             if self.direction == KEY_DIRECTION_RIGHT:
-                current_pattern = "M*J*g.png"
-                current_path = pathlib.Path('./small_mario_frames')
+                if self.eat_mashroom is True and self.eat_flower is not True:
+                    current_pattern = "S*M*J*.png"
+                    current_path = pathlib.Path('./big_mario_frames')
+                elif self.eat_flower is True:
+                    current_pattern = "F*M*J*.png"
+                    current_path = pathlib.Path('./fire_mario_frames')
+                else:  
+                    current_pattern = "M*J*g.png"
+                    current_path = pathlib.Path('./small_mario_frames')
                 self.load_frames(current_pattern, current_path)
             elif self.direction == KEY_DIRECTION_LEFT:
-                current_pattern = "M*J*g*Flip.png"
-                current_path = pathlib.Path('./small_mario_frames')
+                if self.eat_mashroom is True and self.eat_flower is not True:
+                    current_pattern = "S*M*J*Flip.png"
+                    current_path = pathlib.Path('./big_mario_frames')
+                elif self.eat_flower is True:
+                    current_pattern = "F*M*J*Flip.png"
+                    current_path = pathlib.Path('./fire_mario_frames')
+                else:    
+                    current_pattern = "M*J*g*Flip.png"
+                    current_path = pathlib.Path('./small_mario_frames')
                 self.load_frames(current_pattern, current_path)
         elif self.doing_standing is True:
             if self.direction == KEY_DIRECTION_RIGHT:
-                current_pattern = "M*S*g.png"
-                current_path = pathlib.Path('./small_mario_frames')
+                if self.eat_mashroom is True and self.eat_flower is not True:
+                    current_pattern = "S*M*S*.png"
+                    current_path = pathlib.Path('./big_mario_frames')
+                elif self.eat_flower is True:
+                    current_pattern = "F*M*S*.png"
+                    current_path = pathlib.Path('./fire_mario_frames')
+                else:    
+                    current_pattern = "M*S*g.png"
+                    current_path = pathlib.Path('./small_mario_frames')
                 self.load_frames(current_pattern, current_path)
             elif self.direction == KEY_DIRECTION_LEFT:
-                current_pattern = "M*S*g*Flip.png"
-                current_path = pathlib.Path('./small_mario_frames')
+                if self.eat_mashroom is True and self.eat_flower is not True:
+                    current_pattern = "S*M*S*Flip.png"
+                    current_path = pathlib.Path('./big_mario_frames')
+                elif self.eat_flower is True:
+                    current_pattern = "F*M*S*Flip.png"
+                    current_path = pathlib.Path('./fire_mario_frames')
+                else:    
+                    current_pattern = "M*S*g*Flip.png"
+                    current_path = pathlib.Path('./small_mario_frames')
                 self.load_frames(current_pattern, current_path)
         elif self.doing_running is True:
             if self.direction == KEY_DIRECTION_RIGHT:
-                current_pattern = "f*s.gif"
-                current_path = pathlib.Path('./small_mario_frames')
+                if self.eat_mashroom is True and self.eat_flower is not True:
+                    current_pattern = "f*s.gif"
+                    current_path = pathlib.Path('./big_mario_frames')
+                elif self.eat_flower is True:
+                    current_pattern = "f*s.gif"
+                    current_path = pathlib.Path('./fire_mario_frames')
+                else:
+                    current_pattern = "f*s.gif"
+                    current_path = pathlib.Path('./small_mario_frames')
                 self.load_frames(current_pattern, current_path)
             elif self.direction == KEY_DIRECTION_LEFT:
-                current_pattern = "f*s*p.gif"
-                current_path = pathlib.Path('./small_mario_frames')
+                if self.eat_mashroom is True and self.eat_flower is not True:
+                    current_pattern = "f*s*p.gif"
+                    current_path = pathlib.Path('./big_mario_frames')
+                elif self.eat_flower is True:
+                    current_pattern = "f*s*p.gif"
+                    current_path = pathlib.Path('./fire_mario_frames')
+                else:
+                    current_pattern = "f*s*p.gif"
+                    current_path = pathlib.Path('./small_mario_frames')
                 self.load_frames(current_pattern, current_path)
     
-    def update_mario_frames_grow(self, screen, current_pattern, current_path):
-        if self.eat_mashroom is True:
+    def update_mario_frames_grow(self, screen, draw_big):
+        current_pattern = None
+        current_path    = None
+        if self.eat_mashroom is True and self.eat_flower is False:
+            if draw_big is False:
+                current_pattern = "M*S*g.png"
+                current_path = pathlib.Path('./small_mario_frames')
+            elif draw_big is True:
+                current_pattern = "S*M*S*.png"
+                current_path = pathlib.Path('./big_mario_frames')
             self.load_frames(current_pattern, current_path)
         elif self.eat_flower is True:
-            pass
+            #print("called")
+            if draw_big is False:
+                if self.eat_mashroom is True:
+                    current_pattern = "S*M*S*.png"
+                    current_path = pathlib.Path('./big_mario_frames')
+                else:
+                    current_pattern = "M*S*.png"
+                    current_path = pathlib.Path('./small_mario_frames')
+            elif draw_big is True:
+                current_pattern = "F*M*S*.png"
+                current_path = pathlib.Path('./fire_mario_frames')
+            self.load_frames(current_pattern, current_path)
         else:
             pass
 

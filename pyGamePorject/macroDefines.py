@@ -29,11 +29,14 @@ MOVE_RANGE                = 30
 MARIO_POSITION_X_INIT     = 37
 MARIO_POSITION_Y_INIT     = 199
 
+BIG_MARIO_POSITION_Y      = 183
+
 MASHROOM_POSITION_X       = 120
 MASHROOM_POSITION_Y       = 199
 
 FLOWER_POSITION_X         = 150
 FLOWER_POSITION_Y         = 199
+BIG_MARIO_FLOWER_Y_GAP    = 16
 
 GOOMBA_1_POSITION_X_INIT  = 200
 GOOMBA_1_POSITION_Y_INIT  = 200
@@ -48,12 +51,13 @@ MARIO_JUMP                = 1
 
 KEY_DIRECTION_IDX         = 0
 KEY_SPACE_IDX             = 1
+KEY_FIRE_IDX              = 2
 
 FIRE_BALL_POSITION_X      = 50
 FIRE_BALL_POSITION_Y      = 50
 
 QUESTION_BLOCK_POSITION_X = 220
-QUESTION_BLOCK_POSITION_Y = 155
+QUESTION_BLOCK_POSITION_Y = 137
 
 KEY_BACKGROUND            = "background"
 KEY_MARIO                 = "marioBlock"
@@ -63,5 +67,6 @@ KEY_FLOWER                = "flowerBlock"
 KEY_MASHROOM              = "mashroomBlock"
 KEY_FIREBALL              = "fireballBlock"
 
-EAT_PERIOD_TIMESPAN       = 600
-EAT_PERIOD_STEP           = 100
+EAT_PERIOD_TIMESPAN       = 700
+EAT_PERIOD_STEP           = 55
+FIRE_ENABLE               = 1
