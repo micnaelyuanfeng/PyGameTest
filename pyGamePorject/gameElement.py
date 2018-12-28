@@ -45,6 +45,7 @@ class fire_ball(game_element):
         self.rect  = None
         self.num_frames = 0
         self.direction = None
+        self.bounce_direction = None
 
     def set_fire_ball_block(self, screen, frames):
         for index, frame in enumerate(frames):
@@ -376,6 +377,7 @@ class mario_block(game_element):
             elif draw_big is True:
                 current_pattern = "S*M*S*.png"
                 current_path = pathlib.Path('./big_mario_frames')
+            
             self.load_frames(current_pattern, current_path)
         elif self.eat_flower is True:
             #print("called")
@@ -389,6 +391,7 @@ class mario_block(game_element):
             elif draw_big is True:
                 current_pattern = "F*M*S*.png"
                 current_path = pathlib.Path('./fire_mario_frames')
+    
             self.load_frames(current_pattern, current_path)
         else:
             pass

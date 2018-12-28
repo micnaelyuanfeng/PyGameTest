@@ -37,6 +37,7 @@ if __name__ == "__main__":
         gameEngine.check_mario_eat(game_list)
         gameEngine.check_fire(screen, peripheral_actions[KEY_ACTION], game_list)
         gameEngine.check_goomba_alive(game_list)
+        gameEngine.check_fireball(game_list)
 
         if game_list[KEY_MARIO].eat_done is True:
             gameEngine.update_screen(screen, game_list, peripheral_actions, frame_counter)

@@ -63,6 +63,8 @@ class game_engine(object):
 
                 fireBall.rect.centerx = element_list[KEY_MARIO].rect.centerx + 7
                 fireBall.rect.centery = element_list[KEY_MARIO].rect.centery + 2
+                
+                fireBall.bounce_direction = FIRE_BALL_BOUNCE_DOWN
 
                 if element_list[KEY_MARIO].direction == KEY_DIRECTION_LEFT:
                     element_list[KEY_FIREBALL].direction = DIRECTION_LEFT
@@ -89,7 +91,10 @@ class game_engine(object):
                                 element.direction = KEY_DIRECTION_RIGHT
                                 
                                 if element.doing_jump is not True:
-                                    element.rect.centerx = element.rect.centerx + 1
+                                    if element.rect.centerx >= GROUND_BOUNDRY_X:
+                                        element.rect.centerx = element.rect.centerx
+                                    else:
+                                        element.rect.centerx = element.rect.centerx + 1
                         element.update_mario_frames(screen)
                     
                     elif element.jump_done == True and peripheral_actions[KEY_ACTION][KEY_SPACE_IDX] == MARIO_JUMP:
@@ -111,7 +116,10 @@ class game_engine(object):
                             element.rect.centery = element.rect.centery + 1
                         
                         if element.direction == KEY_DIRECTION_RIGHT:
-                            element.rect.centerx = element.rect.centerx + 1
+                            if element.rect.centerx >= GROUND_BOUNDRY_X:
+                                element.rect.centerx = element.rect.centerx
+                            else:
+                                element.rect.centerx = element.rect.centerx + 1
                         elif element.direction == KEY_DIRECTION_LEFT:
                             element.rect.centerx = element.rect.centerx - 1
                         
@@ -155,11 +163,23 @@ class game_engine(object):
                     elif element.direction == DIRECTION_RIGHT:
                         element.rect.centerx = element.rect.centerx + 1
             
-                    if element.rect.centerx == GOOMBA_1_POSITION_X_INIT - MOVE_RANGE:
-                        element.direction = DIRECTION_RIGHT
-                    elif element.rect.centerx == GOOMBA_1_POSITION_X_INIT + MOVE_RANGE:
-                        element.direction = DIRECTION_LEFT
-    
+                    if element.bounce_direction == FIRE_BALL_BOUNCE_DOWN:
+                        element.rect.centery = element.rect.centery + 1 
+                        if element.rect.centery == GROUND_BOUNDRY:
+                            element.bounce_direction = FIRE_BALL_BOUNCE_UP
+                    elif element.bounce_direction == FIRE_BALL_BOUNCE_UP:
+                        element.rect.centery = element.rect.centery - 1
+                        if element.rect.centery == GROUND_BOUNDRY - FIRE_BALL_JUMP_RANGE:
+                            element.bounce_direction = FIRE_BALL_BOUNCE_DOWN
+                    
+
+    def check_fireball(self, element_list):
+        if KEY_FIREBALL in element_list:
+            if element_list[KEY_FIREBALL].rect.centerx < SCREEN_BOUNDRY_X_MIN or element_list[KEY_FIREBALL].rect.centerx > SCREEN_BOUNDRY_X_MAX:
+                del element_list[KEY_FIREBALL]
+
+                element_list[KEY_MARIO].fire_fireball = False
+
     def check_mario_eat(self, element_list):
         mario = element_list[KEY_MARIO]
 
